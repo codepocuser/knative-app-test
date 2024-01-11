@@ -1,18 +1,18 @@
 FROM node:20-alpine
 
-# Create app directory with node user permission
-WORKDIR /usr/src/app
+# Create app directory and set the right permissions
+RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Set the working directory
+WORKDIR /home/node/app
 
-# Change ownership of the work directory to the node user
-# This is necessary to ensure npm can write to the directory
-RUN chown -R node:node /usr/src/app
+# Copy package.json and package-lock.json with appropriate permissions
+COPY --chown=node:node package*.json ./
 
-# Set the npm cache directory to a path inside the work directory
-# This ensures that npm has the necessary permissions to access it
-ENV NPM_CONFIG_CACHE=/usr/src/app/.npm
+# Set the HOME environment variable for the node user
+# Ensure that npm uses a cache directory within the node user's home directory
+ENV HOME=/home/node
+ENV NPM_CONFIG_CACHE=$HOME/.npm
 
 # Switch to the node user
 USER node
@@ -20,11 +20,11 @@ USER node
 # Install app dependencies
 RUN npm install
 
-# Copy the rest of the application source code
+# Copy the rest of your code with appropriate permissions
 COPY --chown=node:node . .
 
-# Your application's default port
+# Expose the port your app runs on
 EXPOSE 8080
 
-# Start the application
+# Define the command to run your app
 CMD ["npm", "start"]
