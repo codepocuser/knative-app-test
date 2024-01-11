@@ -25,7 +25,9 @@ jobs:
       run: chmod +x springboot/gradlew
 
     - name: Build with Gradle
-      run: springboot/gradlew clean build -x test
+      run: |
+        cd springboot
+        ./gradlew clean build -x test
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
