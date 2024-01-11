@@ -4,9 +4,25 @@ metadata:
   name: knative-nodejs
 spec:
   template:
+    metadata:
+      annotations:
+        # Specify the container's needed port in the Knative configuration
+        autoscaling.knative.dev/minScale: "1"  # Ensure at least one pod is running
     spec:
       containers:
         - name: knative-nodejs
-          image: codepocuser/knative-nodejs:latest
+          image: codepocuser/knative-nodejs:latest  # Ensure this is the correct and latest image
           ports:
             - containerPort: 8080
+          # Adding a readiness probe (optional)
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 2
+          # Adding a liveness probe (optional)
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 2
