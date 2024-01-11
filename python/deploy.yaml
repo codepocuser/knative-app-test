@@ -1,0 +1,12 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: knative-python
+spec:
+  template:
+    spec:
+      containers:
+        - image: codepocuser/knative-python:latest
+         environment:
+            - name: PORT
+              value: "8080"

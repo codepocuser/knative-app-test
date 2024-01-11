@@ -1,0 +1,11 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: node-helloworld
+spec:
+  template:
+    spec:
+      containers:
+        - image: codepocuser/knative-nodejs:latest
+          ports:
+            - containerPort: 8080
