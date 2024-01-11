@@ -4,8 +4,8 @@ on:
   push:
     branches: 
       - master
-    paths:
-      - 'nodejs/**'
+    # paths:
+    #   - 'nodejs/**'
 
 jobs:
   build-and-deploy:
