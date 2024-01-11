@@ -1,30 +1,31 @@
 FROM node:20-alpine
 
-# Create app directory and set the right permissions
-RUN mkdir -p /home/node/app && chown -R node:node /home/node/app
+# Create app directory with node user permission
+WORKDIR /usr/src/app
 
-# Set the working directory
-WORKDIR /home/node/app
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Copy package.json and package-lock.json with appropriate permissions
-COPY --chown=node:node package*.json ./
+# OpenShift specific: make directory writable by any user
+RUN chmod -R 777 /usr/src/app
 
-# Set the HOME environment variable for the node user
-# Ensure that npm uses a cache directory within the node user's home directory
-ENV HOME=/home/node
-ENV NPM_CONFIG_CACHE=$HOME/.npm
-
-# Switch to the node user
-USER node
+# Set the npm cache directory to a path inside the work directory
+# This ensures that npm has the necessary permissions to access it
+ENV NPM_CONFIG_CACHE=/usr/src/app/.npm
 
 # Install app dependencies
+# As of npm@5, the cache is self-healing from corruption issues
+# RUN npm install --unsafe-perm=true --allow-root
 RUN npm install
 
-# Copy the rest of your code with appropriate permissions
-COPY --chown=node:node . .
+# Copy the rest of the application source code
+COPY . .
 
-# Expose the port your app runs on
+# OpenShift specific: make directory writable by any user
+RUN chmod -R 777 /usr/src/app
+
+# Your application's default port
 EXPOSE 8080
 
-# Define the command to run your app
+# Start the application
 CMD ["npm", "start"]
