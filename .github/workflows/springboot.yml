@@ -22,7 +22,7 @@ jobs:
         distribution: 'adopt'
 
     - name: Make gradlew executable
-      run: chmod +x ./gradlew
+      run: chmod +x springboot/gradlew
 
     - name: Build with Gradle
       run: ./gradlew clean build -x test
