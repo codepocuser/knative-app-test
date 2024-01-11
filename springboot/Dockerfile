@@ -1,4 +1,5 @@
-FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+FROM openjdk:17-oracle
+RUN groupadd -r spring && useradd -r -g spring spring
+USER spring:spring
+COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
