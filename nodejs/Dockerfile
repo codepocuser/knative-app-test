@@ -26,7 +26,7 @@ COPY --chown=node:node . .
 # Your application's default port
 EXPOSE 8080
 
-USER 1008830000
+RUN chown -R 1008830000:0 "/.npm"
 
 # Start the application
 CMD ["npm", "start"]
