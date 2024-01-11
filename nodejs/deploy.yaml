@@ -7,7 +7,7 @@ spec:
     metadata:
       annotations:
         # Specify the container's needed port in the Knative configuration
-        autoscaling.knative.dev/minScale: "1"  # Ensure at least one pod is running
+        autoscaling.knative.dev/minScale: "0"  # Ensure at least one pod is running
     spec:
       containers:
         - name: knative-nodejs
