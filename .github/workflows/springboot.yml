@@ -44,4 +44,4 @@ jobs:
     - name: Deploy to OpenShift
       run: |
         echo ${{ secrets.OPENSHIFT_TOKEN }} | oc login ${{ secrets.OPENSHIFT_SERVER }} --token=${{ secrets.OPENSHIFT_TOKEN }} --insecure-skip-tls-verify
-        oc apply -f ../springboot/deploy.yaml
+        oc apply -f ../../springboot/deploy.yaml
