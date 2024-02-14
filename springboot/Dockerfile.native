@@ -8,7 +8,7 @@ RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
 
 # Copy the native executable to the container
-COPY --chown=spring:spring springboot/build/native/nativeCompile/application/springboot /app
+COPY --chown=spring:spring /home/runner/work/knative-app-test/knative-app-test/springboot/build/native/nativeCompile/springboot /app
 
 # Set the binary as the entrypoint of the container
 ENTRYPOINT ["/app"]
