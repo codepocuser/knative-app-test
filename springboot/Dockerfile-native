@@ -1,0 +1,22 @@
+# Use the official GraalVM community image
+FROM ghcr.io/graalvm/jdk-community:21 AS build
+
+# Install native-image tool
+RUN gu install native-image
+
+# Copy the local code to the container
+WORKDIR /home/app
+COPY . .
+
+# Use Gradle to build the application
+RUN ./gradlew build
+
+# Create a native image
+RUN ./gradlew nativeCompile
+
+# Use a lightweight Docker image (distroless or Alpine) for the runtime
+FROM gcr.io/distroless/java-debian10
+COPY --from=build /home/app/build/native/nativeCompile/app /app
+
+# Set the entrypoint
+ENTRYPOINT ["/app"]
