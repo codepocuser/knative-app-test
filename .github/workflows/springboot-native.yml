@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Check Out Repo
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
 
       - name: Set up JDK with GraalVM
         uses: DeLaGuardo/setup-graalvm@5.0
