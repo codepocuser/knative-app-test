@@ -12,14 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check Out Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up GraalVM with Java 21
-        uses: DeLaGuardo/setup-graalvm@4.0
+        uses: graalvm/setup-graalvm@v1
         with:
-          graalvm-version: '22.0.0.2'
-          java-version: 'java21'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          java-version: '21'
+          distribution: 'graalvm'
 
       - name: Make gradlew executable
         run: chmod +x springboot/gradlew
