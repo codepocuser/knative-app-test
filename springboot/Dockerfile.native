@@ -1,0 +1,14 @@
+# Use a lightweight base image; you don't need a JDK to run a native image
+FROM frolvlad/alpine-glibc
+
+# Create a group and user to run our app
+RUN addgroup -S spring && adduser -S spring -G spring
+
+# Use the spring user
+USER spring:spring
+
+# Copy the native executable to the container
+COPY --chown=spring:spring springboot/build/native-image/application /app
+
+# Set the binary as the entrypoint of the container
+ENTRYPOINT ["/app"]
