@@ -1,14 +1,20 @@
-FROM frolvlad/alpine-glibc:latestss
+# Use a base image with glibc 2.34 or newer
+FROM ubuntu:22.04
 
-# Install dependencies, if any
-RUN apk add --no-cache libstdc++
+# Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Add your application's user and group
-RUN addgroup -S spring && adduser -S spring -G spring
+# Install runtime dependencies if there are any
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libstdc++6 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a group and user to run our app
+RUN groupadd --system spring && \
+    useradd --system --gid spring spring
 
 # Copy the native executable to the container
 COPY --chown=spring:spring build/native/nativeCompile/springboot /app
-RUN chmod +x /app
 
 # Use the spring user
 USER spring
