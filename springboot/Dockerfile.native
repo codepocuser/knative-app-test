@@ -1,7 +1,7 @@
-# Use a lightweight Debian base image
-FROM debian:bullseye-slim
+# Use a lightweight Ubuntu base image that matches the glibc version
+FROM ubuntu:20.04
 
-# Install any runtime dependencies your application needs
+# Install runtime dependencies if there are any
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libstdc++6 \
     && rm -rf /var/lib/apt/lists/*
