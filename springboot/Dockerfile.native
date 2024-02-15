@@ -1,20 +1,23 @@
-# Use a lightweight Ubuntu base image that matches the glibc version
-FROM ubuntu:20.04
+# Use a base image with glibc 2.34 or newer
+FROM ubuntu:22.04
+
+# Avoid prompts from apt
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Install runtime dependencies if there are any
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libstdc++6 \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libstdc++6 \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a group and user to run our app
-RUN addgroup --system spring \
-    && adduser --system --ingroup spring spring
+RUN groupadd --system spring && \
+    useradd --system --gid spring spring
 
 # Copy the native executable to the container
 COPY --chown=spring:spring build/native/nativeCompile/springboot /app
 
 # Use the spring user
-USER spring:spring
+USER spring
 
 # Set the binary as the entrypoint of the container
 ENTRYPOINT ["/app"]
