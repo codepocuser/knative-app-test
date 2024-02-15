@@ -35,12 +35,13 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build and Push Docker native image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./springboot
           file: ./springboot/Dockerfile.native
           push: true
           tags: codepocuser/knative-springboot-native:latest
+          platforms: linux/amd64,linux/arm64
 
       - name: Deploy to OpenShift
         run: |
