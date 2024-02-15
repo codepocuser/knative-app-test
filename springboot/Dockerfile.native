@@ -1,7 +1,6 @@
-# Use Alpine Linux as the base image
-FROM alpine:latest
+FROM frolvlad/alpine-glibc:latestss
 
-# Install dependencies, if any, using Alpine's package manager
+# Install dependencies, if any
 RUN apk add --no-cache libstdc++
 
 # Add your application's user and group
