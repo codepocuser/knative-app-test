@@ -4,11 +4,12 @@ FROM frolvlad/alpine-glibc
 # Create a group and user to run our app
 RUN addgroup -S spring && adduser -S spring -G spring
 
+# Copy the native executable to the container
+# Make sure the path is relative to the build context, which is './springboot'
+COPY --chown=spring:spring build/native/nativeCompile/springboot /app
+
 # Use the spring user
 USER spring:spring
-
-# Copy the native executable to the container
-COPY --chown=spring:spring springboot/build/native/nativeCompile/springboot /app
 
 # Set the binary as the entrypoint of the container
 ENTRYPOINT ["/app"]
