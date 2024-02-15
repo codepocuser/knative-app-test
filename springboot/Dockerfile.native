@@ -1,5 +1,5 @@
-# Use a base image with glibc 2.34 or newer
-FROM ubuntu:22.04
+# Use a base image with glibc
+FROM debian:bullseye-slim
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install runtime dependencies if there are any
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libstdc++6 \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a group and user to run our app
