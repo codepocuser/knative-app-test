@@ -1,5 +1,5 @@
-# Use a base image with glibc
-FROM debian:bullseye-slim
+# Use a base image with glibc 2.34 or newer
+FROM debian:bookworm-slim
 
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
