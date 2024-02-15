@@ -1,18 +1,11 @@
-# Use a base image with glibc 2.34 or newer
-FROM debian:bookworm-slim
+# Use Alpine Linux as the base image
+FROM alpine:latest
 
-# Avoid prompts from apt
-ENV DEBIAN_FRONTEND=noninteractive
+# Install dependencies, if any, using Alpine's package manager
+RUN apk add --no-cache libstdc++
 
-# Install runtime dependencies if there are any
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libstdc++6 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create a group and user to run our app
-RUN groupadd --system spring && \
-    useradd --system --gid spring spring
+# Add your application's user and group
+RUN addgroup -S spring && adduser -S spring -G spring
 
 # Copy the native executable to the container
 COPY --chown=spring:spring build/native/nativeCompile/springboot /app
