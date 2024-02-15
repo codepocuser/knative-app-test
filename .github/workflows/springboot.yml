@@ -4,8 +4,8 @@ on:
   push:
     branches: 
       - master
-#    paths:
-#      - 'springboot/**'
+    paths:
+      - 'springboot/**'
 
 jobs:
   build-and-deploy:

@@ -1,11 +1,16 @@
-# Use a lightweight base image; you don't need a JDK to run a native image
-FROM frolvlad/alpine-glibc
+# Use a lightweight Debian base image
+FROM debian:bullseye-slim
+
+# Install any runtime dependencies your application needs
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libstdc++6 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Create a group and user to run our app
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN addgroup --system spring \
+    && adduser --system --ingroup spring spring
 
 # Copy the native executable to the container
-# Make sure the path is relative to the build context, which is './springboot'
 COPY --chown=spring:spring build/native/nativeCompile/springboot /app
 
 # Use the spring user

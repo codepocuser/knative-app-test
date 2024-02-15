@@ -41,7 +41,6 @@ jobs:
           file: ./springboot/Dockerfile.native
           push: true
           tags: codepocuser/knative-springboot-native:latest
-          platforms: linux/amd64,linux/arm64
 
       - name: Deploy to OpenShift
         run: |
