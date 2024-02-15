@@ -9,6 +9,7 @@ RUN addgroup -S spring && adduser -S spring -G spring
 
 # Copy the native executable to the container
 COPY --chown=spring:spring build/native/nativeCompile/springboot /app
+RUN chmod +x /app
 
 # Use the spring user
 USER spring
