@@ -7,6 +7,6 @@ spec:
     spec:
       containers:
         - name: knative-springboot-native
-          image: codepocuser/knative-springboot-native:latest
+          image: codepocuser/knative-springboot-native:latest #test
           ports:
             - containerPort: 8080
