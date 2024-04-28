@@ -2,6 +2,7 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: knative-springboot-native
+  namespace: to-billy-dev
 spec:
   template:
     spec:
