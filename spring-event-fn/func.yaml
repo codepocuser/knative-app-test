@@ -1,0 +1,17 @@
+specVersion: 0.36.0
+name: fn
+runtime: springboot
+created: 2024-04-30T11:34:07.745402+08:00
+invoke: cloudevent
+build:
+  buildEnvs:
+  - name: BP_NATIVE_IMAGE
+    value: "false"
+  - name: BP_JVM_VERSION
+    value: "21"
+  - name: BP_MAVEN_ACTIVE_PROFILES
+    value: native
+deploy:
+  healthEndpoints:
+    liveness: /actuator/health
+    readiness: /actuator/health
